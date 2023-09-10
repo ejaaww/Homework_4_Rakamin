@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tugas Week 3 Fahreza Ramadani</title>
+    
+    <script>
+        
+        function greeting() {
+                // Variabel untuk menyimpan suhu
+                var suhu = 500 
+        // Variabel untuk menyimpan jenis kendaraan
+var platKuning = false; // true jika kendaraan memiliki plat kuning, false jika tidak
+var motor = false; // true jika kendaraan adalah motor, false jika tidak
+var mobilCC = 1400; // Kapasitas CC mobil, 
+
+// Implementasi logika untuk kondisi air
+if (suhu >= -100 && suhu <= 0) {
+  console.log("Air dalam kondisi beku");
+} else if (suhu >= 1 && suhu <= 100) {
+  console.log("Air dalam kondisi cair");
+} else if (suhu >= 101 && suhu <= 500) {
+  console.log("Air dalam kondisi uap");
+} else {
+  console.log("Suhu tidak terdefinisi");
+}
+
+// Implementasi logika untuk SPBU
+if (platKuning || motor) {
+  console.log("Gunakan BBM subsidi");
+} else if (mobilCC < 1500) {
+  console.log("Gunakan PERTAMAX");
+} else  {
+  console.log("Gunakan PERTAMAX Turbo");
+}
+        }
+    </script>
+</head>
+<body>
+  <h1>Belajar JavaScript</h1>
+  <p> Tugas Week 3 Rakamin Fahreza Ramadani </p>
+  Klik tombol ini untuk running hasil:
+
+    <!-- Memanggil fungsi JavaScript -->
+    <button onclick="greeting()">Klik Saya</button>
+</body>
+</html>
