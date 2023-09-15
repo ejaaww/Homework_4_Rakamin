@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registrasi dan List Pendaftar</title>
+  <style>
+    /* CSS styling untuk tab */
+.tab {
+  display: none;
+}
+
+/* CSS styling untuk tab navigasi */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul li {
+  float: left;
+}
+
+ul li a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: #000;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+}
+
+ul li a:hover {
+  background-color: #ddd;
+}
+
+/* CSS styling untuk konten tab */
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* CSS styling untuk tabel */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Tab navigasi -->
+  <ul>
+    <li><a href="javascript:void(0);" class="tablinks" onclick="openTab(event, 'Registrasi')">Registrasi</a></li>
+    <li><a href="javascript:void(0);" class="tablinks" onclick="openTab(event, 'ListPendaftar')">List Pendaftar</a></li>
+  </ul>
+
+  <!-- Tab Konten -->
+  <div id="Registrasi" class="tab">
+    <h2>Form Registrasi</h2>
+    <form id="registrationForm">
+      <label for="nama">Nama (minimal 10 karakter):</label>
+      <input type="text" id="nama" name="nama" minlength="10" required><br><br>
+      
+      <label for="umur">Umur (minimal 25 tahun):</label>
+      <input type="number" id="umur" name="umur" min="25" required><br><br>
+      
+      <label for="uangSangu">Uang Sangu (minimal 100 ribu dan maksimal 1 juta):</label>
+      <input type="number" id="uangSangu" name="uangSangu" min="100000" max="1000000" required><br><br>
+      
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="ListPendaftar" class="tab">
+    <h2>List Pendaftar</h2>
+    <p>Rata-rata pendaftar memiliki uang saku sebesar <span id="avgUangSangu">0</span> dengan rata-rata umur <span id="avgUmur">0</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Umur</th>
+          <th>Uang Sangu</th>
+        </tr>
+      </thead>
+      <tbody id="pendaftarTableBody">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Fungsi untuk membuka tab
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      document.getElementById(tabName).style.display = "block";
+    }
+
+    // Mengatur event listener untuk form submission
+    document.getElementById("registrationForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const nama = document.getElementById("nama").value;
+      const umur = parseInt(document.getElementById("umur").value);
+      const uangSangu = parseInt(document.getElementById("uangSangu").value);
+
+      if (nama.length < 10 || umur < 25 || uangSangu < 100000 || uangSangu > 1000000) {
+        alert("Mohon isi formulir dengan benar.");
+        return;
+      }
+
+      // Tambahkan data pendaftar ke tabel
+      const pendaftarTable = document.getElementById("pendaftarTableBody");
+      const newRow = pendaftarTable.insertRow(-1);
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+      cell1.innerHTML = nama;
+      cell2.innerHTML = umur;
+      cell3.innerHTML = uangSangu;
+
+      // Hitung rata-rata umur dan uang saku
+      const pendaftarRows = pendaftarTable.rows;
+      let totalUmur = 0;
+      let totalUangSangu = 0;
+
+      for (let i = 0; i < pendaftarRows.length; i++) {
+        totalUmur += parseInt(pendaftarRows[i].cells[1].innerHTML);
+        totalUangSangu += parseInt(pendaftarRows[i].cells[2].innerHTML);
+      }
+
+      const avgUmur = totalUmur / pendaftarRows.length;
+      const avgUangSangu = totalUangSangu / pendaftarRows.length;
+
+      // Update nilai rata-rata
+      document.getElementById("avgUmur").textContent = avgUmur.toFixed(2);
+      document.getElementById("avgUangSangu").textContent = avgUangSangu.toFixed(2);
+    });
+  </script>
+</body>
+</html>
